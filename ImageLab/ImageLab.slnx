@@ -3,5 +3,5 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="ImageLab.vcxproj" />
+  <Project Path="ImageLab.vcxproj" Id="55894cc3-e6c2-40f2-959f-f5b324a5a8f1" />
 </Solution>
