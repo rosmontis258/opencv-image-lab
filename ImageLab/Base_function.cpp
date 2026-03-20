@@ -7,7 +7,7 @@ using namespace std;
 //加载图片
 Mat loadImage(const string& path)
 {
-    string imagePath = "D:/Projects/opencv-image-lab/assets/input/rose.jpeg";
+    string imagePath = path;
     Mat img = imread(imagePath);
     if (img.empty()) {
         cout << "图片读取失败" << endl;
@@ -32,7 +32,7 @@ Mat applyGaussian(const Mat& img, int ksize = 7, double sigmaX = 5, double sigma
 }
 
 //二值化
-Mat Binary(const Mat& img, double thresh = 127, double maxValue = 255)
+Mat binaryImage(const Mat& img, double thresh = 127, double maxValue = 255)
 {
     Mat imgBinary;
     Mat imgGray = toGray(img);
@@ -42,7 +42,7 @@ Mat Binary(const Mat& img, double thresh = 127, double maxValue = 255)
 }
 
 //Canny边缘检测
-Mat CannyEdge(const Mat& img, double lowThreshold = 50, double highThreshold = 150)
+Mat cannyEdge(const Mat& img, double lowThreshold = 50, double highThreshold = 150)
 {
     Mat imgCanny;
     Mat imgGray = toGray(img);
@@ -55,16 +55,22 @@ Mat CannyEdge(const Mat& img, double lowThreshold = 50, double highThreshold = 1
 Mat erodeImage(const Mat& img, int kernelSize = 3, int iterations = 1)
 {
     Mat imgErode;
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
     erode(img, imgErode, kernelSize, Point(-1, -1), iterations);
     return imgErode;
 }
 
 //膨胀
-Mat DilateImage(const Mat& img, int kernelSize = 3, int iterations = 1)
+Mat dilateImage(const Mat& img, int kernelSize = 3, int iterations = 1)
 {
     Mat imgDilate;
-    Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
-    dilate(img, imgDilate, kernel, Point(-1, -1), iterations);
+    dilate(img, imgDilate, kernelSize, Point(-1, -1), iterations);
     return imgDilate;
+}
+
+//调整图像大小
+Mat reSizeImage(const Mat& img, Size newSize, double fx = 0, double fy = 0)
+{
+    Mat imgResized;
+    resize(img, imgResized, newSize, fx, fy);
+    return imgResized;
 }
