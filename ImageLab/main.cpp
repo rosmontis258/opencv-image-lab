@@ -7,13 +7,20 @@ using namespace std;
 
 int main() {
     Mat img = loadImage("D:/Projects/opencv-image-lab/assets/input/rose.jpeg");
-    Mat imgAdaptive = adaptiveBinaryImage(img);
+    Mat imgToGray = toGray(img);
+    Mat imgGaussian = applyGaussian(img);
+    Mat imgBianry = binaryImage(img);
     Mat imgOtsu = otsuBinaryImage(img);
-    double fx = 0.5, fy = 0.5;
-    Mat imgResize1 = reSizeImage(imgAdaptive, Size(0, 0), fx, fy);
-    Mat imgResize2 = reSizeImage(imgOtsu, Size(0, 0), fx, fy);
-    imshow("adaptiveBinaryImage", imgResize1);
-    imshow("otsuBinaryImage", imgResize2);
+    Mat imgAdaptive = adaptiveBinaryImage(img);
+    Mat imgCanny = cannyEdge(img);
+    Mat imgOpen = openImage(img);
+    Mat imgClose = closeImage(img);
+    Mat row1, row2, row3, compareImage;
+    hconcat(vector<Mat>{imgToGray, imgGaussian, imgBianry}, row1);
+    hconcat(vector<Mat>{imgOtsu, imgAdaptive, imgCanny}, row2);
+    hconcat(vector<Mat>{imgOpen, imgClose}, row3);
+    vconcat(vector<Mat>{row1, row2, row3}, compareImage);
+    imshow("compare", compareImage);
     waitKey(0);
     return 0;
 }

@@ -99,3 +99,32 @@ Mat reSizeImage(const Mat& img, Size newSize, double fx = 0, double fy = 0)
     resize(img, imgResized, newSize, fx, fy);
     return imgResized;
 }
+
+//开运算(先腐蚀后膨胀，去除小物体)
+Mat openImage(const Mat& img, int kernelSize = 3, int iterations = 1)
+{
+    Mat imgOpen;
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(kernelSize, kernelSize));
+    morphologyEx(img, imgOpen, MORPH_OPEN, kernel, Point(-1, -1), iterations);
+    return imgOpen;
+}
+
+//闭运算(先膨胀后腐蚀，填充小孔洞)
+Mat closeImage(const Mat& img, int kernelSize = 3, int iterations = 1)
+{
+    Mat imgClose;
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(kernelSize, kernelSize));
+    morphologyEx(img, imgClose, MORPH_CLOSE, kernel, Point(-1, -1), iterations);
+    return imgClose;
+}
+
+//多窗口结果对比
+Mat toBgrIfNeeded(const Mat& img)
+{
+    if (img.channels() == 1) {
+        Mat imgBgr;
+        cvtColor(img, imgBgr, COLOR_GRAY2BGR);
+        return imgBgr;
+    }
+    return img.clone();
+}
