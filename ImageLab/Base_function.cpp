@@ -31,7 +31,7 @@ Mat applyGaussian(const Mat& img, int ksize = 7, double sigmaX = 5, double sigma
     return imgBlur;
 }
 
-//二值化
+//普通二值化
 Mat binaryImage(const Mat& img, double thresh = 127, double maxValue = 255)
 {
     Mat imgBinary;
@@ -39,6 +39,31 @@ Mat binaryImage(const Mat& img, double thresh = 127, double maxValue = 255)
     Mat imgBlur = applyGaussian(imgGray);
     threshold(imgBlur, imgBinary, thresh, maxValue, THRESH_BINARY);
     return imgBinary;
+}
+
+//Otsu二值化(全图自动计算最佳阈值)
+Mat otsuBinaryImage(const Mat& img)
+{
+    Mat imgOtsuBinary;
+    Mat imgGray = toGray(img);
+    Mat imgBlur = applyGaussian(imgGray);
+    threshold(imgBlur, imgOtsuBinary, 0, 255, THRESH_BINARY | THRESH_OTSU);
+    return imgOtsuBinary;
+}
+
+//自适应二值化(局部区域自动计算最佳阈值)
+Mat adaptiveBinaryImage(const Mat& img)
+{
+    Mat imgAdaptiveBinary;
+    Mat imgGray = toGray(img);
+    Mat imgBlur = applyGaussian(imgGray);
+    
+    CV_Assert(!img.empty());
+    CV_Assert(imgGray.type() == CV_8UC1);
+    CV_Assert(imgBlur.type() == CV_8UC1);
+
+    adaptiveThreshold(imgBlur, imgAdaptiveBinary, 255, ADAPTIVE_THRESH_GAUSSIAN_C, THRESH_BINARY, 11, 2);
+    return imgAdaptiveBinary;
 }
 
 //Canny边缘检测
