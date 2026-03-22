@@ -21,10 +21,12 @@ Mat erodeImage(const Mat& img, int kernelSize = 3, int iterations = 1);
 
 Mat dilateImage(const Mat& img, int kernelSize = 3, int iterations = 1);
 
-Mat reSizeImage(const Mat& img, Size newSize, double fx = 0, double fy = 0);
+Mat reSizeImage(const Mat& img, Size newSize = Size(), double fx = 0.5, double fy = 0.5);
 
 Mat openImage(const Mat& img, int kernelSize = 3, int iterations = 1);
 
 Mat closeImage(const Mat& img, int kernelSize = 3, int iterations = 1);
 
 Mat toBgrIfNeeded(const Mat& img);
+
+Mat preCompare(const Mat& img, double fx = 0.5, double fy = 0.5);

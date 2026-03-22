@@ -93,7 +93,7 @@ Mat dilateImage(const Mat& img, int kernelSize = 3, int iterations = 1)
 }
 
 //调整图像大小
-Mat reSizeImage(const Mat& img, Size newSize, double fx = 0, double fy = 0)
+Mat reSizeImage(const Mat& img, Size newSize = Size(), double fx = 0.5, double fy = 0.5)
 {
     Mat imgResized;
     resize(img, imgResized, newSize, fx, fy);
@@ -118,7 +118,7 @@ Mat closeImage(const Mat& img, int kernelSize = 3, int iterations = 1)
     return imgClose;
 }
 
-//多窗口结果对比
+//单通道图像转换为三通道BGR图像
 Mat toBgrIfNeeded(const Mat& img)
 {
     if (img.channels() == 1) {
@@ -127,4 +127,10 @@ Mat toBgrIfNeeded(const Mat& img)
         return imgBgr;
     }
     return img.clone();
+}
+
+//多图片对比前置操作(调整大小、单通道转三通道)
+Mat preCompare(const Mat& img, double fx = 0.5, double fy = 0.5)
+{
+    return toBgrIfNeeded(reSizeImage(img, Size(), fx, fy));
 }
