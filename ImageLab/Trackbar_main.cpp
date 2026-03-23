@@ -9,5 +9,6 @@ int main()
 {
 	Mat img = loadImage("D:/Projects/opencv-image-lab/assets/input/rose.jpeg");
 	cannyTrackbar(img);
+	gaussianTrackbar(img);
 	return 0;
 }

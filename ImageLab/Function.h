@@ -47,3 +47,6 @@ Mat preCompare(const Mat& img, double fx = 0.5, double fy = 0.5);
 
 //Canny边缘检测Trackbar工具
 void cannyTrackbar(const Mat& img);
+
+//Gaussian高斯滤波Trackbar工具类
+void gaussianTrackbar(const Mat& img);
