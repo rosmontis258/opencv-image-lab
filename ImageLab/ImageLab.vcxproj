@@ -138,10 +138,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Base_function.cpp" />
-    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Compare_main.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="Trackbar.cpp" />
+    <ClCompile Include="Trackbar_main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Base_function.h" />
+    <ClInclude Include="Function.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
