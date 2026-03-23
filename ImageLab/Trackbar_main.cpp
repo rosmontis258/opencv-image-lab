@@ -8,7 +8,6 @@ using namespace std;
 int main()
 {
 	Mat img = loadImage("D:/Projects/opencv-image-lab/assets/input/rose.jpeg");
-	cannyTrackbar(img);
-	gaussianTrackbar(img);
+	binaryTrackbar(img);
 	return 0;
 }

@@ -1,5 +1,6 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
+#include "Function.h"
 
 using namespace cv;
 using namespace std;
@@ -86,5 +87,45 @@ private:
 void gaussianTrackbar(const Mat& img)
 {
     GaussianTrackbarTool tool(img);
+    tool.run();
+}
+
+//Threshold二值化TrackBar工具类
+class ThresholdTrackBarTool
+{
+public:
+    ThresholdTrackBarTool(const Mat& img, const string& windowName = "BinaryTrackbar")
+        :src(img.clone()), windowName(windowName), thresh(0) {
+    }
+    void run()
+    {
+        namedWindow(windowName, WINDOW_AUTOSIZE);
+        createTrackbar("thresh", windowName, &thresh, 255, onTrackbar, this);
+        update();
+        waitKey(0);
+    }
+private:
+    Mat src;
+    string windowName;
+    int thresh;
+
+    void update()
+    {
+        Mat binaryOutput;
+        Mat imgGray = toGray(src);
+        threshold(imgGray, binaryOutput, thresh, 255, THRESH_BINARY);
+        imshow(windowName, binaryOutput);
+    }
+
+    static void onTrackbar(int, void* userdata)
+    {
+        ThresholdTrackBarTool* self = static_cast<ThresholdTrackBarTool*>(userdata);
+        self->update();
+    }
+};
+
+void binaryTrackbar(const Mat& img)
+{
+    ThresholdTrackBarTool tool(img);
     tool.run();
 }

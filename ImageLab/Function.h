@@ -50,3 +50,6 @@ void cannyTrackbar(const Mat& img);
 
 //Gaussian高斯滤波Trackbar工具类
 void gaussianTrackbar(const Mat& img);
+
+//Binary二值化Trackbar工具类
+void binaryTrackbar(const Mat& img);
