@@ -8,6 +8,6 @@ using namespace std;
 int main()
 {
 	Mat img = loadImage("D:/Projects/opencv-image-lab/assets/input/rose.jpeg");
-	binaryTrackbar(img);
+	morphologyTrackbar(img);
 	return 0;
 }

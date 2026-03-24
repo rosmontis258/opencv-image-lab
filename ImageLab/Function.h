@@ -53,3 +53,6 @@ void gaussianTrackbar(const Mat& img);
 
 //Binary二值化Trackbar工具类
 void binaryTrackbar(const Mat& img);
+
+//Morphology形态学Trackbar工具类
+void morphologyTrackbar(const Mat& img);

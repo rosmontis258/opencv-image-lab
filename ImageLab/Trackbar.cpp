@@ -95,7 +95,7 @@ class ThresholdTrackBarTool
 {
 public:
     ThresholdTrackBarTool(const Mat& img, const string& windowName = "BinaryTrackbar")
-        :src(img.clone()), windowName(windowName), thresh(0) {
+        :src(img.clone()), windowName(windowName), thresh(0){
     }
     void run()
     {
@@ -127,5 +127,65 @@ private:
 void binaryTrackbar(const Mat& img)
 {
     ThresholdTrackBarTool tool(img);
+    tool.run();
+}
+
+//Morphology形态学Trackbar工具类
+class MorphologyTrackbarTool
+{
+public:
+    MorphologyTrackbarTool(const Mat& img, const string& windowName = "MorphologyTrackbar")
+        :src(img.clone()), windowName(windowName), value(0), iterations(0), option(0), srcBinary(otsuBinaryImage(src)) {
+    }
+    void run()
+    {
+        namedWindow(windowName, WINDOW_AUTOSIZE);
+        createTrackbar("Current Op", windowName, &option, 3, onTrackbar, this);
+        createTrackbar("Kernel Size", windowName, &value, 15, onTrackbar, this);
+        createTrackbar("Iterations", windowName, &iterations, 10, onTrackbar, this);
+        update();
+        waitKey(0);
+    }
+private:
+    Mat src;
+    Mat srcBinary;
+    string windowName;
+    int value;
+    int iterations;
+    int option;
+
+    void update()
+    {
+        Mat morphologyOutput;
+        int kernelSize = value * 2 + 1;
+        Mat kernel = getStructuringElement(MORPH_RECT, Size(kernelSize, kernelSize));
+        switch (option)
+        {
+        case 0:
+            erode(srcBinary, morphologyOutput, kernel, Point(-1, -1), iterations);
+            break;
+        case 1:
+            dilate(srcBinary, morphologyOutput, kernel, Point(-1, -1), iterations);
+            break;
+        case 2:
+            morphologyEx(srcBinary, morphologyOutput, MORPH_OPEN, kernel, Point(-1, -1), iterations);
+            break;
+        case 3:
+            morphologyEx(srcBinary, morphologyOutput, MORPH_CLOSE, kernel, Point(-1, -1), iterations);
+            break;
+        }
+        imshow(windowName, morphologyOutput);
+    }
+
+    static void onTrackbar(int, void* userdata)
+    {
+        MorphologyTrackbarTool* self = static_cast<MorphologyTrackbarTool*>(userdata);
+        self->update();
+    }
+};
+
+void morphologyTrackbar(const Mat& img)
+{
+    MorphologyTrackbarTool tool(img);
     tool.run();
 }
