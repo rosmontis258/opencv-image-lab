@@ -10,12 +10,13 @@ class CannyTrackbarTool
 {
 public:
     CannyTrackbarTool(const Mat& img, const string& windowName = "CannyTrackbar")
-        : src(img.clone()), windowName(windowName), thresholdValue(50) {}
+        : src(img.clone()), windowName(windowName), lowThresholdValue(0), highThresholdValue(0) {}
 
     void run()
     {
         namedWindow(windowName, WINDOW_AUTOSIZE);
-        createTrackbar("Threshold", windowName, &thresholdValue, 255, onTrackbar, this);
+        createTrackbar("lowThreshold", windowName, &lowThresholdValue, 255, onTrackbar, this);
+        createTrackbar("highThreshold", windowName, &highThresholdValue, 255, onTrackbar, this);
         update();
         waitKey(0);
     }
@@ -23,13 +24,13 @@ public:
 private:
     Mat src;
     string windowName;
-    int thresholdValue;
+    int lowThresholdValue, highThresholdValue;
 
     void update()
     {
         Mat gray, cannyOutput;
         cvtColor(src, gray, COLOR_BGR2GRAY);
-        Canny(gray, cannyOutput, thresholdValue, thresholdValue * 2);
+        Canny(gray, cannyOutput, lowThresholdValue, highThresholdValue);
         imshow(windowName, cannyOutput);
     }
 

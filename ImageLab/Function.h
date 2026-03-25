@@ -10,7 +10,7 @@ Mat loadImage(const string& path);
 Mat toGray(const Mat& img);
 
 //高斯滤波
-Mat applyGaussian(const Mat& img, int ksize = 7, double sigmaX = 5, double sigmaY = 0);
+Mat applyGaussian(const Mat& img, int kernelSize = 7, double sigmaX = 5, double sigmaY = 0);
 
 //普通二值化
 Mat binaryImage(const Mat& img, double thresh = 127, double maxValue = 255);

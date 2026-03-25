@@ -24,15 +24,15 @@ Mat toGray(const Mat& img)
 }
 
 //高斯滤波
-Mat applyGaussian(const Mat& img, int ksize = 7, double sigmaX = 5, double sigmaY = 0)
+Mat applyGaussian(const Mat& img, int kernelSize = 7, double sigmaX = 1.5, double sigmaY = 0)
 {
     Mat imgBlur;
-    GaussianBlur(img, imgBlur, Size(ksize, ksize)/*高斯核*/, sigmaX/*横向模糊程度*/, sigmaY/*纵向模糊程度*/);
+    GaussianBlur(img, imgBlur, Size(kernelSize, kernelSize)/*高斯核*/, sigmaX/*横向模糊程度*/, sigmaY/*纵向模糊程度*/);
     return imgBlur;
 }
 
 //普通二值化
-Mat binaryImage(const Mat& img, double thresh = 127, double maxValue = 255)
+Mat binaryImage(const Mat& img, double thresh = 130, double maxValue = 255)
 {
     Mat imgBinary;
     Mat imgGray = toGray(img);
@@ -67,7 +67,7 @@ Mat adaptiveBinaryImage(const Mat& img)
 }
 
 //Canny边缘检测
-Mat cannyEdge(const Mat& img, double lowThreshold = 50, double highThreshold = 150)
+Mat cannyEdge(const Mat& img, double lowThreshold = 150, double highThreshold = 255)
 {
     Mat imgCanny;
     Mat imgGray = toGray(img);
@@ -80,7 +80,8 @@ Mat cannyEdge(const Mat& img, double lowThreshold = 50, double highThreshold = 1
 Mat erodeImage(const Mat& img, int kernelSize = 3, int iterations = 1)
 {
     Mat imgErode;
-    erode(img, imgErode, kernelSize, Point(-1, -1), iterations);
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(kernelSize, kernelSize));
+    erode(img, imgErode, kernel, Point(-1, -1), iterations);
     return imgErode;
 }
 
@@ -88,7 +89,8 @@ Mat erodeImage(const Mat& img, int kernelSize = 3, int iterations = 1)
 Mat dilateImage(const Mat& img, int kernelSize = 3, int iterations = 1)
 {
     Mat imgDilate;
-    dilate(img, imgDilate, kernelSize, Point(-1, -1), iterations);
+    Mat kernel = getStructuringElement(MORPH_RECT, Size(kernelSize, kernelSize));
+    dilate(img, imgDilate, kernel, Point(-1, -1), iterations);
     return imgDilate;
 }
 
