@@ -52,7 +52,6 @@ int main(int argc, char* argv[])
             cout << "输入无效，请重新选择" << endl;
             break;
         }
-        
     }
 	return 0;
 }
