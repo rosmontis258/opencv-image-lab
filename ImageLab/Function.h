@@ -10,10 +10,10 @@ Mat loadImage(const string& path);
 Mat toGray(const Mat& img);
 
 //高斯滤波
-Mat applyGaussian(const Mat& img, int kernelSize = 7, double sigmaX = 5, double sigmaY = 0);
+Mat applyGaussian(const Mat& img, int kernelSize = 7, double sigmaX = 1.5, double sigmaY = 0);
 
 //普通二值化
-Mat binaryImage(const Mat& img, double thresh = 127, double maxValue = 255);
+Mat binaryImage(const Mat& img, double thresh = 130, double maxValue = 255);
 
 //Otsu二值化(全图自动计算最佳阈值)
 Mat otsuBinaryImage(const Mat& img);
@@ -22,7 +22,7 @@ Mat otsuBinaryImage(const Mat& img);
 Mat adaptiveBinaryImage(const Mat& img);
 
 //Canny边缘检测
-Mat cannyEdge(const Mat& img, double lowThreshold = 50, double highThreshold = 150);
+Mat cannyEdge(const Mat& img, double lowThreshold = 150, double highThreshold = 255);
 
 //腐蚀
 Mat erodeImage(const Mat& img, int kernelSize = 3, int iterations = 1);

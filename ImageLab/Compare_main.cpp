@@ -5,8 +5,19 @@
 using namespace cv;
 using namespace std;
 
-int main() {
-    Mat img = loadImage("D:/Projects/opencv-image-lab/assets/input/rose.jpeg");
+int main(int argc, char* argv[]) {
+    string imagePath = "D:/Projects/opencv-image-lab/assets/input/rose.jpeg";  // 默认图
+    //从命令行参数读取图片路径
+    if (argc >= 2) {
+        imagePath = argv[1];
+    }
+    Mat img = loadImage(imagePath);
+
+    if (img.empty()) {
+        cerr << "Failed to load image: " << imagePath << endl;
+        return -1;
+    }
+
     Mat imgOrigin = preCompare(img, 0.3, 0.3);
     Mat imgToGray = preCompare(toGray(img), 0.3, 0.3);
     Mat imgGaussian = preCompare(applyGaussian(img), 0.3, 0.3);

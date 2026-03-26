@@ -28,9 +28,8 @@ private:
 
     void update()
     {
-        Mat gray, cannyOutput;
-        cvtColor(src, gray, COLOR_BGR2GRAY);
-        Canny(gray, cannyOutput, lowThresholdValue, highThresholdValue);
+        Mat imgGray = toGray(src), imgBlur = applyGaussian(imgGray), cannyOutput;
+        Canny(imgBlur, cannyOutput, lowThresholdValue, highThresholdValue);
         imshow(windowName, cannyOutput);
     }
 
