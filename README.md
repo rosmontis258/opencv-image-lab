@@ -14,7 +14,7 @@
 - 多个 Trackbar 调参工具(可通过输入自由调用)
 
 ## 项目结构
-- `src/`：源代码
+- `ImageLab/`：源代码
 - `assets/input/`：输入图片
 - `assets/output/`：输出结果
 - `docs/`：开发笔记
